@@ -1,13 +1,25 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
+    const { user, logOut } = useAuth();
+
     const links = <>
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/donationRequest">Donation Request</NavLink></li>
         <li><NavLink to="/blog">Blog</NavLink></li>
-        <li><NavLink to="/funding">Funding</NavLink></li>
-        <li><NavLink to="/login">Login</NavLink></li>
-    </>
+        {
+            user ? <li><NavLink to="/funding">Funding</NavLink></li> : <li><NavLink to="/login">Login</NavLink></li>
+        }
+    </>;
+
+    const signOutUser = () => {
+        logOut()
+        .then(() => {
+            toast.success('Logout');
+        })
+    }
     return (
         <div>
             <div className="navbar bg-base-100 fixed z-10">
@@ -28,23 +40,25 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <div className="dropdown dropdown-end">
-                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
-                                <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    {
+                        user && <div className="dropdown dropdown-end">
+                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                <div className="w-10 rounded-full">
+                                    <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
+                                </div>
                             </div>
+                            <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                                <li>
+                                    <a className="justify-between">
+                                        Profile
+                                        <span className="badge">New</span>
+                                    </a>
+                                </li>
+                                <li><Link to="dashboard"><a>Dashboard</a></Link></li>
+                                <li onClick={signOutUser}><a>Logout</a></li>
+                            </ul>
                         </div>
-                        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                            <li>
-                                <a className="justify-between">
-                                    Profile
-                                    <span className="badge">New</span>
-                                </a>
-                            </li>
-                            <li><a>Dashboard</a></li>
-                            <li><a>Logout</a></li>
-                        </ul>
-                    </div>
+                    }
                 </div>
             </div>
         </div>

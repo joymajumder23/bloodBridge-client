@@ -1,7 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginUI from "../../../assets/images/bloodLogin.svg";
+import useAuth from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
+    const {signIn} = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+
     const handleSubmit = e => {
         e.preventDefault();
         const form = e.target;
@@ -9,31 +16,15 @@ const Login = () => {
         const password = form.password.value;
         console.log(email, password);
         
-        // signIn(email, password)
-        // .then(result => {
-        //     console.log(result.user);
-        //     Swal.fire({
-        //         title: "Login Successfully",
-        //         showClass: {
-        //           popup: `
-        //             animate__animated
-        //             animate__fadeInUp
-        //             animate__faster
-        //           `
-        //         },
-        //         hideClass: {
-        //           popup: `
-        //             animate__animated
-        //             animate__fadeOutDown
-        //             animate__faster
-        //           `
-        //         }
-        //       });
-        //       navigate(from, { replace: true });
-        // })
-        // .catch(error => {
-        //     console.log(error.message);
-        // })
+        signIn(email, password)
+        .then(result => {
+            console.log(result.user);
+            toast.success('Login Successfully')
+              navigate(from, { replace: true });
+        })
+        .catch(error => {
+            console.log(error.message);
+        })
     }
     return (
         <div>
