@@ -54,7 +54,9 @@ const Navbar = () => {
                                         <span className="badge">New</span>
                                     </a>
                                 </li>
-                                <li><Link to="dashboard"><a>Dashboard</a></Link></li>
+                                {
+                                    user && <li><Link to="/dashboard/donorsHome"><a>Dashboard</a></Link></li>
+                                }
                                 <li onClick={signOutUser}><a>Logout</a></li>
                             </ul>
                         </div>

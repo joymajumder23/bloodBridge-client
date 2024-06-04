@@ -5,6 +5,8 @@ import Login from "../components/Pages/Login/Login";
 import Register from "../components/Pages/Register/Register";
 import Dashboard from "../components/Layouts/Dashboard/Dashboard";
 import Profile from "../components/Dashboard/Profile/Profile";
+import DonorsHome from "../components/Dashboard/DonorsHome/DonorsHome";
+import CreateDonation from "../components/Dashboard/CreateDonation/CreateDonation";
 
 const router = createBrowserRouter([
     {
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
         {
           path: "profile",
           element: <Profile></Profile>
+        },
+        {
+          path: "donorsHome",
+          element: <DonorsHome></DonorsHome>
+        },
+        {
+          path: "create-donation-request",
+          element: <CreateDonation></CreateDonation>
         }
       ]
     }
