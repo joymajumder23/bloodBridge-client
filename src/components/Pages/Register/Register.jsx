@@ -56,7 +56,8 @@ const Register = () => {
                                 blood: data.blood,
                                 district: data.district,
                                 upazila: data.upazila,
-                                status: 'active'
+                                status: 'active',
+                                role: ''
                             };
                             axiosPublic.post('/users', userInfo)
                                 .then(res => {

@@ -6,12 +6,17 @@ import 'react-clock/dist/Clock.css';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import useAuth from "../../Hooks/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const CreateDonation = () => {
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
     const [value, onChange] = useState('');
     const [startDate, setStartDate] = useState(new Date());
+    const axiosSecure = useAxiosSecure();
+    const { user } = useAuth();
 
     useEffect(() => {
         fetch('./../districts.json')
@@ -26,17 +31,25 @@ const CreateDonation = () => {
             .then(data => setUpazilas(data))
     }, []);
 
-    const { user } = useAuth();
-
+    const {mutateAsync} = useMutation({
+        mutationFn: async requestData => {
+            const {data} = await axiosSecure.post('/request', requestData);
+            return data;
+        },
+        onSuccess: () => {
+            toast.success('Added Successfully');
+        }
+    })
     const {
         register,
         handleSubmit,
         formState: { errors }, reset
     } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         console.log(data);
-        const donationUser = {
+       try {
+        const requestData = {
             requesterName: user?.displayName,
             requesterEmail: user?.email,
             recipientName: data.recipientName,
@@ -45,9 +58,17 @@ const CreateDonation = () => {
             district: data.district,
             upazila: data.upazila,
             donationDate: startDate,
-            donationTime: value
+            donationTime: value,
+            details: data.message,
+            status: 'pending'
         };
-        console.log(donationUser);
+        console.log(requestData);
+        reset();
+        await mutateAsync(requestData);
+       }
+       catch(error) {
+        console.log(error.message);
+       }
     }
     return (
         <div>
@@ -155,7 +176,7 @@ const CreateDonation = () => {
                             <label className="label">
                                 <span className="label-text">Request Message</span>
                             </label>
-                            <textarea className="textarea textarea-bordered w-full" placeholder="message"></textarea>
+                            <textarea className="textarea textarea-bordered w-full" placeholder="message" name="message" {...register("message")} required ></textarea>
                         </div>
                     </div>
                 </div>
