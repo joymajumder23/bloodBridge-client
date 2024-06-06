@@ -9,6 +9,7 @@ import DonorsHome from "../components/Dashboard/DonorsHome/DonorsHome";
 import CreateDonation from "../components/Dashboard/CreateDonation/CreateDonation";
 import DonorReqPage from "../components/Dashboard/DonorReqPage/DonorReqPage";
 import AllUsers from "../components/Dashboard/AllUsers/AllUsers";
+import PrivateRoute from "../components/Private/PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
     },
     {
       path: "dashboard",
-      element: <Dashboard></Dashboard>,
+      element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
       children: [
         {
           path: "profile",
