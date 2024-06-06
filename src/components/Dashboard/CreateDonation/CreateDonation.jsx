@@ -9,6 +9,7 @@ import useAuth from "../../Hooks/useAuth";
 import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import useUser from "../../Hooks/useUser";
 
 const CreateDonation = () => {
     const [districts, setDistricts] = useState([]);
@@ -17,6 +18,12 @@ const CreateDonation = () => {
     const [startDate, setStartDate] = useState(new Date());
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
+    const [users] = useUser();
+    console.log(users);
+    
+//    if(users?.status === "blocked"){
+//     return users;
+//    }
 
     useEffect(() => {
         fetch('./../districts.json')
@@ -60,6 +67,7 @@ const CreateDonation = () => {
             donationDate: startDate,
             donationTime: value,
             details: data.message,
+            location: data.hospital,
             status: 'pending'
         };
         console.log(requestData);
@@ -181,7 +189,10 @@ const CreateDonation = () => {
                     </div>
                 </div>
                 <div>
-                    <input className="btn rounded-none bg-red-600 text-white w-full" type="submit" value="Register" />
+                    {
+                        users?.status === "blocked" ? <input disabled className="btn rounded-none bg-red-600 text-white w-full" type="submit" value="Register" /> : <input className="btn rounded-none bg-red-600 text-white w-full" type="submit" value="Register" />
+                    }
+                    
                 </div>
             </form>
         </div>

@@ -1,37 +1,43 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import ReqTable from "../ReqTable/ReqTable";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import Skeleton from "../../Shared/Skeleton/Skeleton";
+import { TiEdit } from "react-icons/ti";
+import { MdDelete } from "react-icons/md";
 
 const DonorReqPage = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
-    const axiosPublic = useAxiosPublic();
 
-    const { data: reqData = [], isLoading } = useQuery({
+    const { data, isLoading, error } = useQuery({
         queryKey: ['reqData', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/request/${user?.email}`);
+            console.log('API Response:', res); // Log the entire response
             return res.data;
         }
-    })
-    console.log(reqData);
-    
-if(isLoading){
-    return <Skeleton></Skeleton>;
-}
+    });
+
+    if (isLoading) {
+        return <Skeleton />;
+    }
+
+    if (error) {
+        return <div>Error loading data</div>;
+    }
+
+    const requestData = data ? data : []; // Wrap the single object in an array if it exists
+    console.log('Request Data:', requestData); // Log the request data
+
     return (
         <div>
             <h1>My Donor Request</h1>
             <div>
                 <div className="overflow-x-auto">
                     <table className="table">
-                        {/* head */}
                         <thead>
                             <tr>
-                                <th></th>
+                                <th>#</th>
                                 <th>Recipient Name</th>
                                 <th>Recipient Location</th>
                                 <th>Donation Date</th>
@@ -42,14 +48,18 @@ if(isLoading){
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                                reqData?.map(data => <tr key={data._id} className="hover">
-                                    <th></th>
-                                    <td>{data.blood}</td>
-                                    <td>Quality Control Specialist</td>
-                                    <td>Blue</td>
-                                </tr>)
-                            }
+                            {requestData.map((data, index) => (
+                                <tr key={data._id} className="hover">
+                                    <th>{index + 1}</th>
+                                    <td>{data.recipientName}</td>
+                                    <td>{data.location}</td>
+                                    <td>{data.donationDate}</td>
+                                    <td>{data.donationTime}</td>
+                                    <td>{data.status}</td>
+                                    <td>{data.donor}</td>
+                                    <td className="flex gap-2"><button><TiEdit className="text-green-500 text-xl"></TiEdit></button> <button><MdDelete className="text-red-500 text-xl"></MdDelete></button></td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
