@@ -8,10 +8,12 @@ import { Link } from 'react-router-dom'
 import { MdBloodtype, MdHomeWork } from 'react-icons/md'
 import useAuth from "../../Hooks/useAuth";
 import { FaHome } from 'react-icons/fa'
+import useAdmin from '../../Hooks/useAdmin'
 
 const Sidebar = () => {
   const { logOut } = useAuth()
   const [isActive, setActive] = useState(false)
+  const [isAdmin] = useAdmin();
 
   // Sidebar Responsive Handler
   const handleToggle = () => {
@@ -26,7 +28,7 @@ const Sidebar = () => {
             <Link to='/'>
               <img
                 // className='hidden md:block'
-                src='https://i.ibb.co/4ZXzmq5/logo.png'
+                src=''
                 alt='logo'
                 width='100'
                 height='100'
@@ -45,13 +47,12 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div
-        className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-gray-100 w-64 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform ${
-          isActive && '-translate-x-full'
-        }  md:translate-x-0  transition duration-200 ease-in-out`}
+        className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-gray-100 w-64 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform ${isActive && '-translate-x-full'
+          }  md:translate-x-0  transition duration-200 ease-in-out`}
       >
         <div>
           <div>
-            <div className='w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-rose-100 mx-auto'>
+            {/* <div className='w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-rose-100 mx-auto'>
               <Link to='/'>
                 <img
                   // className='hidden md:block'
@@ -61,7 +62,7 @@ const Sidebar = () => {
                   height='100'
                 />
               </Link>
-            </div>
+            </div> */}
           </div>
 
           {/* Nav Items */}
@@ -70,59 +71,74 @@ const Sidebar = () => {
 
             {/*  Menu Items */}
             <nav>
-              {/* Statistics */}
-              <NavLink
-                to='donorsHome'
-                className={({ isActive }) =>
-                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-                    isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                  }`
-                }
-              >
-                <FaHome className='w-5 h-5' />
+              {
+                isAdmin ? <>
+                  {/* Admin Home */}
+                  <NavLink
+                    to='all-users'
+                    className={({ isActive }) =>
+                      `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                      }`
+                    }
+                  >
+                    <MdHomeWork className='w-5 h-5' />
 
-                <span className='mx-4 font-medium'>Donor Home</span>
-              </NavLink>
+                    <span className='mx-4 font-medium'>Admin Home</span>
+                  </NavLink>
+                  {/* All Users */}
+                  <NavLink
+                    to='all-users'
+                    className={({ isActive }) =>
+                      `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                      }`
+                    }
+                  >
+                    <MdHomeWork className='w-5 h-5' />
 
-              {/* Add Room */}
-              <NavLink
-                to='create-donation-request'
-                className={({ isActive }) =>
-                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-                    isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                  }`
-                }
-              >
-                <MdBloodtype className='w-5 h-5' />
+                    <span className='mx-4 font-medium'>All Users</span>
+                  </NavLink>
+                </> : <>
+                  {/* Statistics */}
+                  <NavLink
+                    to='donorsHome'
+                    className={({ isActive }) =>
+                      `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                      }`
+                    }
+                  >
+                    <FaHome className='w-5 h-5' />
 
-                <span className='mx-4 font-medium'>Create Donation</span>
-              </NavLink>
-              {/* My Listing */}
-              <NavLink
-                to='donor-request'
-                className={({ isActive }) =>
-                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-                    isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                  }`
-                }
-              >
-                <MdHomeWork className='w-5 h-5' />
+                    <span className='mx-4 font-medium'>Donor Home</span>
+                  </NavLink>
 
-                <span className='mx-4 font-medium'>My Donor Request</span>
-              </NavLink>
-              {/* All Users */}
-              <NavLink
-                to='all-users'
-                className={({ isActive }) =>
-                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-                    isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                  }`
-                }
-              >
-                <MdHomeWork className='w-5 h-5' />
+                  {/* Add Room */}
+                  <NavLink
+                    to='create-donation-request'
+                    className={({ isActive }) =>
+                      `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                      }`
+                    }
+                  >
+                    <MdBloodtype className='w-5 h-5' />
 
-                <span className='mx-4 font-medium'>All Users</span>
-              </NavLink>
+                    <span className='mx-4 font-medium'>Create Donation</span>
+                  </NavLink>
+
+                  {/* My Listing */}
+                  <NavLink
+                    to='donor-request'
+                    className={({ isActive }) =>
+                      `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+                      }`
+                    }
+                  >
+                    <MdHomeWork className='w-5 h-5' />
+
+                    <span className='mx-4 font-medium'>My Donor Request</span>
+                  </NavLink>
+                </>
+              }
+
             </nav>
           </div>
         </div>
@@ -134,8 +150,7 @@ const Sidebar = () => {
           <NavLink
             to='/dashboard/profile'
             className={({ isActive }) =>
-              `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${
-                isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
+              `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
               }`
             }
           >
