@@ -11,6 +11,8 @@ import DonorReqPage from "../components/Dashboard/DonorReqPage/DonorReqPage";
 import AllUsers from "../components/Dashboard/AllUsers/AllUsers";
 import PrivateRoute from "../components/Private/PrivateRoute";
 import ReqUpdate from "../components/Dashboard/ReqUpdate/ReqUpdate";
+import AdminHome from "../components/Dashboard/Admin/AdminHome/AdminHome";
+import AllRequest from "../components/Dashboard/Admin/AllRequest/AllRequest";
 
 const router = createBrowserRouter([
     {
@@ -59,6 +61,15 @@ const router = createBrowserRouter([
           path: "reqUpdate/:id",
           element: <ReqUpdate></ReqUpdate>,
           loader: ({params}) => fetch(`http://localhost:5000/request/requester/${params.id}`)
+        },
+        // Admin
+        {
+          path: "adminHome",
+          element: <AdminHome></AdminHome>
+        },
+        {
+          path: "all-blood-donation",
+          element: <AllRequest></AllRequest>
         }
       ]
     }

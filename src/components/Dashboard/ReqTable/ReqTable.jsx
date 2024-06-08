@@ -37,8 +37,10 @@ const ReqTable = ({ requestData, handleDelete }) => {
                                 <td>{data.location}</td>
                                 <td>{data.donationDate}</td>
                                 <td>{data.donationTime}</td>
-                                <td>{data.status}</td>
-                                <td>{data._id}</td>
+                                <td className={`${data.status === 'inprogress' && 'text-blue-500' || data.status === 'pending' && 'text-yellow-500'}`}>{data.status}</td>
+                                <td><p className="font-medium">{data.donorName}</p>
+                                    <br /> 
+                                    {data.donorEmail}</td>
                                 <td>
                                     <Link to={`/dashboard/reqUpdate/${data._id}`}><button><TiEdit className="text-green-500 text-xl"></TiEdit></button></Link>
                                 </td>
