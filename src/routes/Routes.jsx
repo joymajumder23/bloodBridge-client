@@ -13,6 +13,8 @@ import PrivateRoute from "../components/Private/PrivateRoute";
 import ReqUpdate from "../components/Dashboard/ReqUpdate/ReqUpdate";
 import AdminHome from "../components/Dashboard/Admin/AdminHome/AdminHome";
 import AllRequest from "../components/Dashboard/Admin/AllRequest/AllRequest";
+import ContentManagement from "../components/Dashboard/Admin/Content/ContentManagement";
+import AddBlog from "../components/Dashboard/Admin/Content/AddBlog";
 
 const router = createBrowserRouter([
     {
@@ -70,6 +72,14 @@ const router = createBrowserRouter([
         {
           path: "all-blood-donation",
           element: <AllRequest></AllRequest>
+        },
+        {
+          path: "content-management",
+          element: <ContentManagement></ContentManagement>
+        },
+        {
+          path: "addBlog",
+          element: <AddBlog></AddBlog>
         }
       ]
     }
