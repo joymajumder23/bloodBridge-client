@@ -1,15 +1,9 @@
-import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { TiEdit } from "react-icons/ti";
-import DeleteModal from "../../Modal/DeleteModal";
 import { Link } from "react-router-dom";
 
 const ReqTable = ({ requestData, handleDelete }) => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const closeModal = () => {
-        setIsOpen(false);
-    }
+    
     console.log(requestData);
 
     return (
@@ -30,7 +24,7 @@ const ReqTable = ({ requestData, handleDelete }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {requestData.map((data, index) => (
+                        {requestData?.map((data, index) => (
                             <tr key={data._id} className="hover">
                                 <th>{index + 1}</th>
                                 <td>{data.recipientName}</td>
@@ -46,7 +40,7 @@ const ReqTable = ({ requestData, handleDelete }) => {
                                 </td>
                                 <td>
                                     <button
-                                        onClick={() => setIsOpen(true)}
+                                        onClick={() => handleDelete(data._id)}
                                         className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight'
                                     >
                                         <span
@@ -55,8 +49,6 @@ const ReqTable = ({ requestData, handleDelete }) => {
                                         ></span>
                                         <span className='relative'><MdDelete className="text-red-500 text-xl"></MdDelete></span>
                                     </button>
-                                    {/* <button aria-hidden='true' onClick={() => setIsOpen(true)}> <span><MdDelete className="text-red-500 text-xl"></MdDelete></span></button> */}
-                                    <DeleteModal isOpen={isOpen} closeModal={closeModal} handleDelete={handleDelete} _id={data._id}></DeleteModal>
                                 </td>
                             </tr>
                         ))}

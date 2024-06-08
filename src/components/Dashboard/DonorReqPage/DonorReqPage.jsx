@@ -4,25 +4,13 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Skeleton from "../../Shared/Skeleton/Skeleton";
 import toast from "react-hot-toast";
 import ReqTable from "../ReqTable/ReqTable";
+import Swal from "sweetalert2";
 
 const DonorReqPage = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     console.log(user?.email);
   
-    // delete
-    const { mutateAsync } = useMutation({
-        mutationFn: async _id => {
-            console.log(_id);
-            const {data} = await axiosSecure.delete(`/request/${_id}`);
-            return data;
-        },
-        onSuccess: (data) => {
-            refetch();
-            toast.success("Deleted Successfully");
-        }
-    })
-
     const { data, isLoading, error, refetch } = useQuery({
         queryKey: ['reqData', user?.email],
         queryFn: async () => {
@@ -43,15 +31,33 @@ const DonorReqPage = () => {
     const requestData = data ? data : []; // Wrap the single object in an array if it exists
     console.log('Request Data:', requestData); // Log the request data
 
-    // delete
-    const handleDelete = async _id => {
-        console.log(_id);
-        try{
-           await mutateAsync(_id);
-        }
-        catch (error) {
-            console.log(error.message);
-        }
+    // delete 
+    const handleDelete = (data) => {
+        console.log(data);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await axiosSecure.delete(`/request/${data._id}`)
+                console.log(res.data);
+                if (res.data.deletedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                    });
+
+                }
+
+            }
+        });
     }
     return (
         <div>
