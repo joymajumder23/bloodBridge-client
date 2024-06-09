@@ -7,7 +7,7 @@ const Navbar = () => {
 
     const links = <>
         <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/donationRequest">Donation Request</NavLink></li>
+        <li><NavLink to="/blood-donation-req">Donation Request</NavLink></li>
         <li><NavLink to="/blog">Blog</NavLink></li>
         {
             user ? <li><NavLink to="/funding">Funding</NavLink></li> : <li><NavLink to="/login">Login</NavLink></li>
@@ -22,7 +22,7 @@ const Navbar = () => {
     }
     return (
         <div>
-            <div className="navbar bg-base-100 fixed z-10">
+            <div className="navbar bg-base-100 z-10">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

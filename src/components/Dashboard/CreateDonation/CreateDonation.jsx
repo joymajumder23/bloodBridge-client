@@ -64,7 +64,7 @@ const CreateDonation = () => {
             blood: data.blood,
             district: data.district,
             upazila: data.upazila,
-            donationDate: startDate,
+            donationDate: startDate.toUTCString(),
             donationTime: value,
             details: data.message,
             location: data.hospital,
