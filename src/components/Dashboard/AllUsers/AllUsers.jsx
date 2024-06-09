@@ -2,9 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Skeleton from "../../Shared/Skeleton/Skeleton";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure();
+    const [displayUsers, setDisplayUsers] = useState([]);
+    const [filter, setFilter] = useState('all');
 
     const { data: users = [], refetch, isLoading } = useQuery({
         queryKey: ['users'],
@@ -15,7 +18,31 @@ const AllUsers = () => {
     })
     console.log(users);
 
-    if(isLoading){
+     // filter
+     const handleUsersFilter = filter => {
+        if (filter === 'all') {
+            setDisplayUsers(users);
+        }
+        else if (filter === 'active') {
+            const draftBlogs = users.filter(blog => blog.status === 'active');
+            setDisplayUsers(draftBlogs);
+        }
+        else if (filter === 'blocked') {
+            const draftPublish = users.filter(blog => blog.status === 'blocked');
+            setDisplayUsers(draftPublish);
+        }
+    }
+
+    const handleSelectChange = (event) => {
+        const selectedFilter = event.target.value;
+        setFilter(selectedFilter);
+    };
+    
+    useEffect(() => {
+        handleUsersFilter(filter);
+    }, [users, filter]);
+
+    if (isLoading) {
         return <Skeleton />;
     }
     const handleMakeAdmin = data => {
@@ -23,7 +50,7 @@ const AllUsers = () => {
             .then(res => {
                 if (res.data.modifiedCount > 0) {
                     refetch();
-                   toast.success('Admin Successfully');
+                    toast.success('Admin Successfully');
                 }
             })
     }
@@ -33,7 +60,7 @@ const AllUsers = () => {
             .then(res => {
                 if (res.data.modifiedCount > 0) {
                     refetch();
-                   toast.success('Volunteer Successfully');
+                    toast.success('Volunteer Successfully');
                 }
             })
     }
@@ -43,7 +70,7 @@ const AllUsers = () => {
             .then(res => {
                 if (res.data.modifiedCount > 0) {
                     refetch();
-                   toast.success('Active Successfully');
+                    toast.success('Active Successfully');
                 }
             })
     }
@@ -53,7 +80,7 @@ const AllUsers = () => {
             .then(res => {
                 if (res.data.modifiedCount > 0) {
                     refetch();
-                   toast.success('Blocked Successfully');
+                    toast.success('Blocked Successfully');
                 }
             })
     }
@@ -61,6 +88,14 @@ const AllUsers = () => {
 
     return (
         <div>
+            <h1 className="text-3xl font-bold">All Users</h1>
+            <div>
+                <select onChange={handleSelectChange} value={filter} className="select select-bordered w-full max-w-xs">
+                    <option selected value="all">All</option>
+                    <option value="active">Active</option>
+                    <option value="blocked">Blocked</option>
+                </select>
+            </div>
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
@@ -79,7 +114,7 @@ const AllUsers = () => {
                     </thead>
                     <tbody>
                         {
-                            users.map((data, index) => <tr key={data._id}>
+                            displayUsers.map((data, index) => <tr key={data._id}>
                                 <th>
                                     <label>
                                         {index + 1}
@@ -100,7 +135,7 @@ const AllUsers = () => {
                                 </td>
                                 <td>{data?.email}</td>
                                 <td>{data?.role}</td>
-                                <td className={`badge ${data?.status === 'active'? 'bg-green-500' : 'bg-red-500'} text-white`}>{data?.status}</td>
+                                <td className={`badge ${data?.status === 'active' ? 'bg-green-500' : 'bg-red-500'} text-white`}>{data?.status}</td>
                                 <td>
                                     {
                                         data.role !== 'admin' && <button onClick={() => handleMakeAdmin(data)} className="badge">Admin</button>

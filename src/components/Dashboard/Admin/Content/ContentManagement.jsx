@@ -7,21 +7,13 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import Skeleton from "../../../Shared/Skeleton/Skeleton";
 import useAdmin from "../../../Hooks/useAdmin";
-import useVolunteer from "../../../Hooks/useVolunteer";
 import { useEffect, useState } from "react";
 
 const ContentManagement = () => {
     const [isAdmin] = useAdmin();
-    const [isVolunteer] = useVolunteer();
     const axiosSecure = useAxiosSecure();
     const [displayBlogs, setDisplayBlogs] = useState([]);
-    // const [blogsData, setBlogsData] = useState([]);
     const [filter, setFilter] = useState('all');
-
-    // useEffect( () => {
-    //     const res = axiosSecure.get('/blogs');
-    //     setBlogsData(res.data);
-    // },[res])
 
     const { data: blogs, isLoading, refetch } = useQuery({
         queryKey: ['blogs'],
@@ -30,20 +22,13 @@ const ContentManagement = () => {
             return res.data;
         }
     })
-    useEffect(() => {
-        handleBlogsFilter(filter);
-    }, [blogs, filter]);
-    // setDisplayBlogs(blogs);
-    if (isLoading) {
-        return <Skeleton />
-    }
 
     // filter
     const handleBlogsFilter = filter => {
         if (filter === 'all') {
             setDisplayBlogs(blogs);
         }
-        if (filter === 'draft') {
+        else if (filter === 'draft') {
             const draftBlogs = blogs.filter(blog => blog.status === 'draft');
             setDisplayBlogs(draftBlogs);
         }
@@ -52,12 +37,20 @@ const ContentManagement = () => {
             setDisplayBlogs(draftPublish);
         }
     }
+    
+    useEffect(() => {
+        handleBlogsFilter(filter);
+    }, [blogs, filter]);
 
     const handleSelectChange = (event) => {
         const selectedFilter = event.target.value;
         setFilter(selectedFilter);
     };
-   
+
+    if (isLoading) {
+        return <Skeleton />
+    }
+
     // published
     const handlePublished = data => {
         axiosSecure.patch(`/blogs/published/${data?._id}`)
@@ -120,14 +113,6 @@ const ContentManagement = () => {
                                 <option value="draft">Draft</option>
                                 <option value="published">Publish</option>
                             </select>
-                            {/* <details className="dropdown">
-                                <summary className="m-1 btn">Filter</summary>
-                                <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-                                    <li onClick={() => handleBlogsFilter('all')}><a>All</a></li>
-                                    <li onClick={() => handleBlogsFilter('draft')}><a>Draft</a></li>
-                                    <li onClick={() => handleBlogsFilter('published')}><a>Publish</a></li>
-                                </ul>
-                            </details> */}
                         </div>
                     </div>
                 </div>
