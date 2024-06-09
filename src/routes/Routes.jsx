@@ -15,6 +15,7 @@ import AdminHome from "../components/Dashboard/Admin/AdminHome/AdminHome";
 import AllRequest from "../components/Dashboard/Admin/AllRequest/AllRequest";
 import ContentManagement from "../components/Dashboard/Admin/Content/ContentManagement";
 import AddBlog from "../components/Dashboard/Admin/Content/AddBlog";
+import VolunteerHome from "../components/Dashboard/Volunteer/VolunteerHome";
 
 const router = createBrowserRouter([
     {
@@ -80,6 +81,11 @@ const router = createBrowserRouter([
         {
           path: "addBlog",
           element: <AddBlog></AddBlog>
+        },
+        // Volunteer
+        {
+          path: "volunteerHome",
+          element: <VolunteerHome></VolunteerHome>
         }
       ]
     }

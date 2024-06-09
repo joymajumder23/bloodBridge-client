@@ -6,8 +6,12 @@ import { TiEdit } from "react-icons/ti";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import Skeleton from "../../../Shared/Skeleton/Skeleton";
+import useAdmin from "../../../Hooks/useAdmin";
+import useVolunteer from "../../../Hooks/useVolunteer";
 
 const ContentManagement = () => {
+    const [isAdmin] = useAdmin();
+    const [isVolunteer] = useVolunteer();
     const axiosSecure = useAxiosSecure();
     const { data: blogs, isLoading, refetch } = useQuery({
         queryKey: ['blogs'],
@@ -80,7 +84,8 @@ const ContentManagement = () => {
                 </div>
             </div>
             <div>
-                <div className="overflow-x-auto">
+                {
+                    isAdmin? <div className="overflow-x-auto">
                     <table className="table">
                         <thead>
                             <tr>
@@ -125,7 +130,29 @@ const ContentManagement = () => {
                             ))}
                         </tbody>
                     </table>
-                </div>
+                </div> : 
+                <div className="overflow-x-auto">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {blogs?.map((data, index) => (
+                            <tr key={data._id} className="hover">
+                                <th>{index + 1}</th>
+                                <td>{data.title}</td>
+                                {/* <td>{data.status}</td> */}
+                                <td className={`${data.status === 'published' && 'text-green-500' || data.status === 'draft' && 'text-yellow-500'}`}>{data.status}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+                }
             </div>
         </div>
     );
