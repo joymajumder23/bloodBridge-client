@@ -8,11 +8,21 @@ import Swal from "sweetalert2";
 import Skeleton from "../../../Shared/Skeleton/Skeleton";
 import useAdmin from "../../../Hooks/useAdmin";
 import useVolunteer from "../../../Hooks/useVolunteer";
+import { useEffect, useState } from "react";
 
 const ContentManagement = () => {
     const [isAdmin] = useAdmin();
     const [isVolunteer] = useVolunteer();
     const axiosSecure = useAxiosSecure();
+    const [displayBlogs, setDisplayBlogs] = useState([]);
+    // const [blogsData, setBlogsData] = useState([]);
+    const [filter, setFilter] = useState('all');
+
+    // useEffect( () => {
+    //     const res = axiosSecure.get('/blogs');
+    //     setBlogsData(res.data);
+    // },[res])
+
     const { data: blogs, isLoading, refetch } = useQuery({
         queryKey: ['blogs'],
         queryFn: async () => {
@@ -20,10 +30,34 @@ const ContentManagement = () => {
             return res.data;
         }
     })
-    console.log(blogs);
+    useEffect(() => {
+        handleBlogsFilter(filter);
+    }, [blogs, filter]);
+    // setDisplayBlogs(blogs);
     if (isLoading) {
         return <Skeleton />
     }
+
+    // filter
+    const handleBlogsFilter = filter => {
+        if (filter === 'all') {
+            setDisplayBlogs(blogs);
+        }
+        if (filter === 'draft') {
+            const draftBlogs = blogs.filter(blog => blog.status === 'draft');
+            setDisplayBlogs(draftBlogs);
+        }
+        else if (filter === 'published') {
+            const draftPublish = blogs.filter(blog => blog.status === 'published');
+            setDisplayBlogs(draftPublish);
+        }
+    }
+
+    const handleSelectChange = (event) => {
+        const selectedFilter = event.target.value;
+        setFilter(selectedFilter);
+    };
+   
     // published
     const handlePublished = data => {
         axiosSecure.patch(`/blogs/published/${data?._id}`)
@@ -76,82 +110,100 @@ const ContentManagement = () => {
     }
     return (
         <div>
-            <h1>Contents</h1>
+            <h1 className="text-3xl font-bold">Contents</h1>
             <div className="flex justify-between">
-                <div>All Contents</div>
+                <div className="flex items-center gap-6"><h1 className="text-xl font-bold">All Contents</h1>
+                    <div>
+                        <div>
+                            <select onChange={handleSelectChange} value={filter} className="select select-bordered w-full max-w-xs">
+                                <option selected value="all">All</option>
+                                <option value="draft">Draft</option>
+                                <option value="published">Publish</option>
+                            </select>
+                            {/* <details className="dropdown">
+                                <summary className="m-1 btn">Filter</summary>
+                                <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                                    <li onClick={() => handleBlogsFilter('all')}><a>All</a></li>
+                                    <li onClick={() => handleBlogsFilter('draft')}><a>Draft</a></li>
+                                    <li onClick={() => handleBlogsFilter('published')}><a>Publish</a></li>
+                                </ul>
+                            </details> */}
+                        </div>
+                    </div>
+                </div>
                 <div>
                     <Link to="/dashboard/addBlog"><button className="btn bg-red-500 text-white rounded-none">Add Blog</button></Link>
                 </div>
             </div>
             <div>
                 {
-                    isAdmin? <div className="overflow-x-auto">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Title</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {blogs?.map((data, index) => (
-                                <tr key={data._id} className="hover">
-                                    <th>{index + 1}</th>
-                                    <td>{data.title}</td>
-                                    {/* <td>{data.status}</td> */}
-                                    <td className={`${data.status === 'published' && 'text-green-500' || data.status === 'draft' && 'text-yellow-500'}`}>{data.status}</td>
-                                    <td>
-                                        {
-                                            data?.status === 'draft' ?
-                                                <button onClick={() => handlePublished(data)} className="badge">Publish</button> : <button onClick={() => handleUnPublished(data)} className="badge">Unpublish</button>
-
-                                        }
-                                    </td>
-                                    <td>
-                                        <Link to={`/dashboard/reqUpdate/${data._id}`}><button><TiEdit className="text-green-500 text-xl"></TiEdit></button></Link>
-                                    </td>
-                                    <td>
-                                        <button onClick={() => handleDelete(data)}
-                                            className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight'
-                                        >
-                                            <span
-                                                aria-hidden='true'
-                                                className='absolute inset-0 bg-red-200 opacity-50 rounded-full'
-                                            ></span>
-                                            <span className='relative'><MdDelete className="text-red-500 text-xl"></MdDelete></span>
-                                        </button>
-
-                                    </td>
+                    isAdmin ? <div className="overflow-x-auto">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div> : 
-                <div className="overflow-x-auto">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Title</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {blogs?.map((data, index) => (
-                            <tr key={data._id} className="hover">
-                                <th>{index + 1}</th>
-                                <td>{data.title}</td>
-                                {/* <td>{data.status}</td> */}
-                                <td className={`${data.status === 'published' && 'text-green-500' || data.status === 'draft' && 'text-yellow-500'}`}>{data.status}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                            </thead>
+                            <tbody>
+                                {displayBlogs?.map((data, index) => (
+                                    <tr key={data._id} className="hover">
+                                        <th>{index + 1}</th>
+                                        <td>{data.title}</td>
+                                        {/* <td>{data.status}</td> */}
+                                        <td className={`${data.status === 'published' && 'text-green-500' || data.status === 'draft' && 'text-yellow-500'}`}>{data.status}</td>
+                                        <td>
+                                            {
+                                                data?.status === 'draft' ?
+                                                    <button onClick={() => handlePublished(data)} className="badge">Publish</button> : <button onClick={() => handleUnPublished(data)} className="badge">Unpublish</button>
+
+                                            }
+                                        </td>
+                                        <td>
+                                            <Link to={`/dashboard/reqUpdate/${data._id}`}><button><TiEdit className="text-green-500 text-xl"></TiEdit></button></Link>
+                                        </td>
+                                        <td>
+                                            <button onClick={() => handleDelete(data)}
+                                                className='relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight'
+                                            >
+                                                <span
+                                                    aria-hidden='true'
+                                                    className='absolute inset-0 bg-red-200 opacity-50 rounded-full'
+                                                ></span>
+                                                <span className='relative'><MdDelete className="text-red-500 text-xl"></MdDelete></span>
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div> :
+                        <div className="overflow-x-auto">
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {blogs?.map((data, index) => (
+                                        <tr key={data._id} className="hover">
+                                            <th>{index + 1}</th>
+                                            <td>{data.title}</td>
+                                            {/* <td>{data.status}</td> */}
+                                            <td className={`${data.status === 'published' && 'text-green-500' || data.status === 'draft' && 'text-yellow-500'}`}>{data.status}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                 }
             </div>
         </div>

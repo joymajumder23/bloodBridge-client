@@ -4,9 +4,12 @@ import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Skeleton from "../../../Shared/Skeleton/Skeleton";
 import ReqTable from "../../ReqTable/ReqTable";
+import useAdmin from "../../../Hooks/useAdmin";
+import AllBloodReqPage from "../../Volunteer/AllBloodReqPage";
 
 const AllRequest = () => {
     const { user } = useAuth();
+    const [isAdmin] = useAdmin();
     const axiosSecure = useAxiosSecure();
     console.log(user?.email);
   
@@ -57,7 +60,9 @@ const AllRequest = () => {
         <div>
             <h1>My Donor Request</h1>
             <div>
-               <ReqTable requestData={requestData} handleDelete={handleDelete}></ReqTable>
+               {
+                isAdmin? <ReqTable requestData={requestData} handleDelete={handleDelete}></ReqTable> : <AllBloodReqPage/>
+               }
             </div>
         </div>
     );
