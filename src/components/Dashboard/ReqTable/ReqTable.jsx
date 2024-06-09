@@ -2,9 +2,9 @@ import { MdDelete } from "react-icons/md";
 import { TiEdit } from "react-icons/ti";
 import { Link } from "react-router-dom";
 
-const ReqTable = ({ requestData, handleDelete }) => {
+const ReqTable = ({ displayRequest, handleDelete }) => {
     
-    console.log(requestData);
+    console.log(displayRequest);
 
     return (
         <div>
@@ -24,7 +24,7 @@ const ReqTable = ({ requestData, handleDelete }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {requestData?.map((data, index) => (
+                        {displayRequest?.map((data, index) => (
                             <tr key={data._id} className="hover">
                                 <th>{index + 1}</th>
                                 <td>{data.recipientName}</td>
