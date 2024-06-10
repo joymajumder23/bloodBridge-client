@@ -1,9 +1,45 @@
 import { useLoaderData } from "react-router-dom";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useAuth from "../../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 const RequestDetails = () => {
     const reqDetails = useLoaderData();
     console.log(reqDetails);
-    const {recipientName, address, blood, district, upazila, donationDate, donationTime, location, status, requesterName, requesterEmail} = reqDetails;
+    const axiosSecure = useAxiosSecure();
+    const {user} = useAuth();
+    const {_id, recipientName, address, blood, district, upazila, donationDate, donationTime, location, status, requesterName, requesterEmail} = reqDetails;
+
+    const donorInfo = {
+        donorName: user?.displayName,
+        donorEmail: user?.email
+    };
+
+     // donate
+     const handleDonate = _id => {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to donate this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, donate it!"
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        const res = await axiosSecure.patch(`/request/inprogress/${_id}`, donorInfo)
+                        console.log(res.data);
+                        if (res.data.modifiedCount > 0) {
+                            Swal.fire({
+                                title: "Donated!",
+                                text: "Your blood has donate.",
+                                icon: "success"
+                            });
+                        }
+                    }
+                
+            })
+    }
     return (
         <div className="max-w-screen-xl mx-auto">
             <h1 className="text-xl">{recipientName} Details</h1>
@@ -13,7 +49,7 @@ const RequestDetails = () => {
                     <div>
                     <div className="flex justify-between items-center">
                     <h2 className="card-title text-3xl"><span className="text-red-500">Recipient Name: <span className="text-black">{recipientName}</span></span></h2>
-                    <p className="badge p-6">{status}</p>
+                    <p className={`badge p-6 text-white font-semibold ${status === 'pending'? 'bg-yellow-500' : status === 'inprogress'? 'bg-blue-500' : ''}`}>{status}</p>
                     </div>
                     <div className="flex justify-between flex-row-reverse items-center">
                         <div>
@@ -37,7 +73,9 @@ const RequestDetails = () => {
                     </div>
                     </div>
                     <div className="card-actions justify-end">
-                        <button className="btn bg-red-500 text-white rounded-none">Donate</button>
+                        {
+                            status === 'pending' && <button onClick={() => handleDonate(_id)} className="btn bg-red-500 text-white rounded-none">Donate</button>
+                        }
                     </div>
                 </div>
             </div>
