@@ -5,7 +5,7 @@ const Card = ({ req }) => {
     const { _id, blood, recipientName, location, donationDate, status } = req;
     return (
         <div>
-            <div className="card card-side bg-base-100 shadow-xl">
+            <div className="card bg-base-100 shadow-xl w-96">
                 {/* <figure><img src={image} alt="Movie" /></figure> */}
                 <div className="card-body">
                     <h2 className="card-title text-3xl text-red-500">{blood}</h2>
@@ -16,7 +16,7 @@ const Card = ({ req }) => {
                         <p className="font-medium"><span className="text-red-500">Date:</span> <span>{donationDate}</span></p>
                     </div>
                     <div className="card-actions justify-end">
-                        <Link><button className="btn bg-red-500 rounded-none text-white"><TbListDetails /> View Details</button></Link>
+                        <Link to={`/request-details/${_id}`}><button className="btn bg-red-500 rounded-none text-white"><TbListDetails /> View Details</button></Link>
                     </div>
                 </div>
             </div>

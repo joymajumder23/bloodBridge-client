@@ -14,12 +14,12 @@ const BloodDonationReq = () => {
     });
     console.log(reqData);
 
-    const pendingReqData = reqData.filter(data => data?.status === 'pending');
+    const pendingReqData = reqData?.filter(data => data?.status === 'pending');
     console.log(pendingReqData);
     return (
         <div className="max-w-screen-xl mx-auto mt-6">
             <h1 className="">Home</h1>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
                 {
                     pendingReqData?.map(req => <Card key={req._id} req={req}></Card>)
                 }

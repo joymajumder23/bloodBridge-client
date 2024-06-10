@@ -17,6 +17,7 @@ import ContentManagement from "../components/Dashboard/Admin/Content/ContentMana
 import AddBlog from "../components/Dashboard/Admin/Content/AddBlog";
 import VolunteerHome from "../components/Dashboard/Volunteer/VolunteerHome";
 import BloodDonationReq from "../components/Pages/BloodDonationReq/BloodDonationReq";
+import RequestDetails from "../components/Pages/RequestDetails/RequestDetails";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
         {
           path: "/blood-donation-req",
           element: <BloodDonationReq></BloodDonationReq>
+        },
+        {
+          path: "/request-details/:id",
+          element: <RequestDetails></RequestDetails>,
+          loader: ({params}) => fetch(`http://localhost:5000/request/requester/${params.id}`)
         },
         {
           path: "/login",
