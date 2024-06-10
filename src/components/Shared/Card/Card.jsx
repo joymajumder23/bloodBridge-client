@@ -5,7 +5,7 @@ const Card = ({ req }) => {
     const { _id, blood, recipientName, location, donationDate, status } = req;
     return (
         <div>
-            <div className="card bg-base-100 shadow-xl w-96">
+            <div className="card bg-base-100 shadow-xl w-full">
                 {/* <figure><img src={image} alt="Movie" /></figure> */}
                 <div className="card-body">
                     <h2 className="card-title text-3xl text-red-500">{blood}</h2>

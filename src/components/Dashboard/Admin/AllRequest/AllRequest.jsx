@@ -9,7 +9,7 @@ import AllBloodReqPage from "../../Volunteer/AllBloodReqPage";
 
 const AllRequest = () => {
     const { user } = useAuth();
-    const [isAdmin] = useAdmin();
+    const [isAdmin, isAdminLoading] = useAdmin();
     const axiosSecure = useAxiosSecure();
     console.log(user?.email);
   
@@ -26,7 +26,7 @@ const AllRequest = () => {
         }
     })
 
-    const { data, isLoading, error, refetch } = useQuery({
+    const { data, error, refetch } = useQuery({
         queryKey: ['reqData', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get('/request');
@@ -35,7 +35,7 @@ const AllRequest = () => {
         }
     });
 
-    if (isLoading) {
+    if (isAdminLoading) {
         return <Skeleton />;
     }
 
@@ -58,7 +58,7 @@ const AllRequest = () => {
     }
     return (
         <div>
-            <h1>My Donor Request</h1>
+            <h1 className="text-4xl font-bold mb-6">All Blood Request</h1>
             <div>
                {
                 isAdmin? <ReqTable requestData={requestData} handleDelete={handleDelete}></ReqTable> : <AllBloodReqPage/>

@@ -55,7 +55,11 @@ const CreateDonation = () => {
 
     const onSubmit = async (data) => {
         console.log(data);
+       
        try {
+        // if(user?.status === 'blocked') {
+        //     return toast.error("Can not create request");
+        // }
         const requestData = {
             requesterName: user?.displayName,
             requesterEmail: user?.email,
@@ -82,8 +86,8 @@ const CreateDonation = () => {
         <div>
             <h1 className="text-3xl font-bold p-4 text-red-500">Create Donation Request</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="card-body w-full border">
-                <div className="flex gap-5">
-                    <div className="w-1/2">
+                <div className="lg:flex gap-5">
+                    <div className="lg:w-1/2">
                         <div className="form-control w-full">
                             <label className="label">
                                 <span className="label-text">Requester Name</span>
@@ -128,7 +132,7 @@ const CreateDonation = () => {
                             </select>
                         </div>
 
-                        <div className="flex">
+                        <div className="lg:flex">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Donation Date</span>
@@ -144,7 +148,7 @@ const CreateDonation = () => {
                         </div>
                     </div>
 
-                    <div className="w-1/2">
+                    <div className="lg:w-1/2">
                         <div className="form-control w-full">
                             <label className="label">
                                 <span className="label-text">Requester Email</span>

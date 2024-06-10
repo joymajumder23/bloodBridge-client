@@ -18,8 +18,8 @@ const BloodDonationReq = () => {
     console.log(pendingReqData);
     return (
         <div className="max-w-screen-xl mx-auto mt-6">
-            <h1 className="">Home</h1>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+            <h1 className="text-3xl md:text-4xl mb-6">Donation Request</h1>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 p-2">
                 {
                     pendingReqData?.map(req => <Card key={req._id} req={req}></Card>)
                 }

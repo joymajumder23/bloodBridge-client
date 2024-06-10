@@ -2,13 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Skeleton from "../../Shared/Skeleton/Skeleton";
-import ReqTable from "../ReqTable/ReqTable";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
+import Table from "../ReqTable/Table";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const DonorReqPage = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+    const axiosPublic = useAxiosPublic();
     console.log(user?.email);
     const [displayRequest, setDisplayRequest] = useState([]);
     const [filter, setFilter] = useState('all');
@@ -66,8 +68,8 @@ const DonorReqPage = () => {
     }
 
     // delete 
-    const handleDelete = (data) => {
-        console.log(data);
+    const handleDelete = (_id) => {
+        console.log(_id);
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -78,7 +80,7 @@ const DonorReqPage = () => {
             confirmButtonText: "Yes, delete it!"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await axiosSecure.delete(`/request/${data._id}`)
+                const res = await axiosSecure.delete(`/request/${_id}`)
                 console.log(res.data);
                 if (res.data.deletedCount > 0) {
                     refetch();
@@ -106,7 +108,7 @@ const DonorReqPage = () => {
                 </select>
             </div>
             <div>
-                <ReqTable displayRequest={displayRequest} handleDelete={handleDelete}></ReqTable>
+                <Table displayRequest={displayRequest} handleDelete={handleDelete}></Table>
             </div>
         </div>
     );

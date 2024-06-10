@@ -18,6 +18,7 @@ import AddBlog from "../components/Dashboard/Admin/Content/AddBlog";
 import VolunteerHome from "../components/Dashboard/Volunteer/VolunteerHome";
 import BloodDonationReq from "../components/Pages/BloodDonationReq/BloodDonationReq";
 import RequestDetails from "../components/Pages/RequestDetails/RequestDetails";
+import BlogDetails from "../components/Pages/Home/Blogs/BlogDetails";
 
 const router = createBrowserRouter([
     {
@@ -36,6 +37,11 @@ const router = createBrowserRouter([
           path: "/request-details/:id",
           element: <RequestDetails></RequestDetails>,
           loader: ({params}) => fetch(`http://localhost:5000/request/requester/${params.id}`)
+        },
+        {
+          path: "/blog-details/:id",
+          element: <BlogDetails></BlogDetails>,
+          loader: ({params}) => fetch(`http://localhost:5000/blogs/${params.id}`)
         },
         {
           path: "/login",
