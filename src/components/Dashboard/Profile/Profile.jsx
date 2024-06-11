@@ -20,9 +20,9 @@ const Profile = () => {
         return <Skeleton></Skeleton>;
     }
     return (
-        <div className="flex flex-col lg:flex gap-6">
+        <div className="flex flex-col lg:flex-row gap-6">
             <div>
-                <div className="card card-compact w-full bg-base-100 shadow-xl p-6">
+                <div className="card card-compact w-full lg:w-96 bg-base-100 shadow-xl p-6">
                     <figure><img className={`rounded-full border-4 ${profile?.
                         status === 'active' ? 'border-green-600' : ""}`} src={profile?.avatar} alt="Shoes" /></figure>
                     <div className="card-body text-center">
@@ -34,7 +34,7 @@ const Profile = () => {
                 </div>
             </div>
             <div>
-                <div className="card card-compact w-full bg-base-100 shadow-xl p-6">
+                <div className="card card-compact w-full lg:w-96 bg-base-100 shadow-xl p-6">
                     <div className="flex justify-between items-center">
                         <h1 className="text-4xl">Profile</h1>
                         <button className="btn text-red-600"><FaEdit></FaEdit></button>

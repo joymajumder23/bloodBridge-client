@@ -1,5 +1,6 @@
 import useAuth from "../../Hooks/useAuth";
 import Skeleton from "../../Shared/Skeleton/Skeleton";
+import Stats from "../Stats/Stats";
 
 const VolunteerHome = () => {
     const {user, loading} = useAuth();
@@ -14,6 +15,10 @@ const VolunteerHome = () => {
                 {
                     user?.displayName ? user?.displayName : "Back"
                 } </h1>
+
+                <div className="text-center mt-4">
+                    <Stats></Stats>
+                </div>
         </div>
     );
 };

@@ -1,4 +1,5 @@
 import useAuth from "../../../Hooks/useAuth";
+import Stats from "../../Stats/Stats";
 
 const AdminHome = () => {
     const {user} = useAuth();
@@ -8,6 +9,10 @@ const AdminHome = () => {
                 {
                     user?.displayName ? user?.displayName : "Back"
                 } </h1>
+
+                <div className="text-center mt-4">
+                    <Stats></Stats>
+                </div>
 
         </div>
     );

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
-import BlogCrad from "./BlogCrad";
 import { useQuery } from "@tanstack/react-query";
+import BlogCrad from "./BlogCrad";
 
-const Blogs = () => {
+const AllBlogs = () => {
     const axiosPublic = useAxiosPublic();
     const [blogData, setBlogData] = useState([]);
     const { data } = useQuery({
@@ -16,7 +16,8 @@ const Blogs = () => {
     console.log(blogData);
     const blogFilter = blogData.filter(data => data.status === 'published');
     return (
-        <div className="max-w-screen-xl mx-auto mt-24 text-center">
+        <div>
+             <div className="max-w-screen-xl mx-auto mt-12 text-center">
             <h1 className="text-4xl font-bold mb-6">Blogs</h1>
             <div className="grid gid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {
@@ -24,7 +25,8 @@ const Blogs = () => {
                 }
             </div>
         </div>
+        </div>
     );
 };
 
-export default Blogs;
+export default AllBlogs;

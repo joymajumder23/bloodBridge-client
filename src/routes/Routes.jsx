@@ -19,11 +19,17 @@ import VolunteerHome from "../components/Dashboard/Volunteer/VolunteerHome";
 import BloodDonationReq from "../components/Pages/BloodDonationReq/BloodDonationReq";
 import RequestDetails from "../components/Pages/RequestDetails/RequestDetails";
 import BlogDetails from "../components/Pages/Home/Blogs/BlogDetails";
+import Error from "../components/Shared/Error/Error";
+import AllBlogs from "../components/Pages/Home/Blogs/AllBlogs";
+import Funding from "../components/Pages/Home/Funding/Funding";
+import AllFunding from "../components/Pages/Home/Funding/AllFunding";
+import Search from "../components/Pages/Home/Search/Search";
 
 const router = createBrowserRouter([
     {
       path: "/",
       element: <Main></Main>,
+      errorElement: <Error></Error>,
       children: [
         {
             path: "/",
@@ -42,6 +48,22 @@ const router = createBrowserRouter([
           path: "/blog-details/:id",
           element: <BlogDetails></BlogDetails>,
           loader: ({params}) => fetch(`http://localhost:5000/blogs/${params.id}`)
+        },
+        {
+          path: "/blog",
+          element: <AllBlogs></AllBlogs>
+        },
+        {
+          path: "/funding",
+          element: <Funding></Funding>
+        },
+        {
+          path: "/allFunding",
+          element: <AllFunding></AllFunding>
+        },
+        {
+          path: "/search",
+          element: <Search></Search>
         },
         {
           path: "/login",

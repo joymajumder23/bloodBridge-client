@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Slider from "../../../Shared/Slider/Slider";
 
 const Banner = () => {
@@ -12,7 +13,7 @@ const Banner = () => {
                 <h1 className="text-white text-xs md:text-6xl uppercase">Donate Blood <br /> and inspires others.</h1>
                 <div className="flex gap-5">
                     <button className="btn w-32 rounded-none bg-red-600 text-white">Join as a donor</button>
-                    <button className="btn rounded-none bg-red-600 text-white">Search Donors</button>
+                    <Link to="/search"><button className="btn rounded-none bg-red-600 text-white">Search Donors</button></Link>
                 </div>
             </div>
         </div>
