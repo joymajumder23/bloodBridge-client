@@ -6,9 +6,11 @@ import { NavLink } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { MdBloodtype, MdHomeWork } from 'react-icons/md'
 import useAuth from "../../Hooks/useAuth";
-import { FaHome } from 'react-icons/fa'
+import { FaHome, FaUsers } from 'react-icons/fa'
 import useAdmin from '../../Hooks/useAdmin'
 import useVolunteer from '../../Hooks/useVolunteer'
+import { BiSolidBookContent, BiSolidDonateBlood } from 'react-icons/bi'
+import { ImProfile } from 'react-icons/im'
 
 const Sidebar = () => {
   const { logOut } = useAuth()
@@ -94,7 +96,7 @@ const Sidebar = () => {
                       }`
                     }
                   >
-                    <MdHomeWork className='w-5 h-5' />
+                    <FaUsers className='w-5 h-5' />
 
                     <span className='mx-4 font-medium'>All Users</span>
                   </NavLink>
@@ -106,7 +108,7 @@ const Sidebar = () => {
                       }`
                     }
                   >
-                    <MdHomeWork className='w-5 h-5' />
+                    <BiSolidDonateBlood className='w-7 h-10' />
 
                     <span className='mx-4 font-medium'>All Blood Donation Request</span>
                   </NavLink>
@@ -118,7 +120,7 @@ const Sidebar = () => {
                       }`
                     }
                   >
-                    <MdHomeWork className='w-5 h-5' />
+                    <BiSolidBookContent className='w-5 h-5' />
 
                     <span className='mx-4 font-medium'>Content Management</span>
                   </NavLink>
@@ -230,7 +232,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <FcSettings className='w-5 h-5' />
+            <ImProfile className='w-5 h-5' />
 
             <span className='mx-4 font-medium'>Profile</span>
           </NavLink>
