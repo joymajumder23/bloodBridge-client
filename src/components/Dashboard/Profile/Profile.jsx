@@ -3,11 +3,18 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useAuth from "../../Hooks/useAuth";
 import { FaEdit } from "react-icons/fa";
 import Skeleton from "../../Shared/Skeleton/Skeleton";
+import { useState } from "react";
+import UpdateProfileModal from "../../Modal/UpdateProfileModal";
 
 const Profile = () => {
     const axiosPublic = useAxiosPublic();
     const { user } = useAuth();
     console.log(user?.email);
+    const [isOpen, setIsOpen] = useState(false);
+    const closeModal = () => {
+        setIsOpen(false)
+      }
+
     const { data: profile = [], isLoading } = useQuery({
         queryKey: ['profile'],
         queryFn: async () => {
@@ -37,7 +44,10 @@ const Profile = () => {
                 <div className="card card-compact w-full lg:w-96 bg-base-100 shadow-xl p-6">
                     <div className="flex justify-between items-center">
                         <h1 className="text-4xl">Profile</h1>
-                        <button className="btn text-red-600"><FaEdit></FaEdit></button>
+                        <button onClick={() => setIsOpen(true)} className="btn text-red-600"><FaEdit></FaEdit></button>
+                    </div>
+                    <div>
+                        <UpdateProfileModal isOpen={isOpen} closeModal={closeModal} />
                     </div>
                     <div className="card-body">
                         <div>
