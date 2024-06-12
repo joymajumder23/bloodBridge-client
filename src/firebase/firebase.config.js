@@ -12,13 +12,6 @@ const firebaseConfig = {
     storageBucket: import.meta.env.VITE_storageBucket,
     messagingSenderId: import.meta.env.VITE_messagingSenderId,
     appId: import.meta.env.VITE_appId,
-
-    //   apiKey: "AIzaSyBUW6YO0PJ1rfUhcAxLVAWF71vSwnHheMU",
-    //   authDomain: "blood-donation-client-27e52.firebaseapp.com",
-    //   projectId: "blood-donation-client-27e52",
-    //   storageBucket: "blood-donation-client-27e52.appspot.com",
-    //   messagingSenderId: "318932329201",
-    //   appId: "1:318932329201:web:00386a2181d85d76713f50"
 };
 
 // Initialize Firebase
