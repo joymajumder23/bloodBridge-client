@@ -46,6 +46,7 @@ const AllUsers = () => {
     if (isLoading) {
         return <Skeleton />;
     }
+   
     const handleMakeAdmin = data => {
         axiosSecure.patch(`/users/admin/${data?._id}`)
             .then(res => {
@@ -85,7 +86,7 @@ const AllUsers = () => {
                 }
             })
     }
-
+   
 
     return (
         <div>
@@ -118,7 +119,7 @@ const AllUsers = () => {
                     </thead>
                     <tbody>
                         {
-                            displayUsers.map((data, index) => <tr key={data._id}>
+                            displayUsers?.map((data, index) => <tr key={data._id}>
                                 <th>
                                     <label>
                                         {index + 1}

@@ -134,7 +134,6 @@ const ContentManagement = () => {
                                     <th>Title</th>
                                     <th>Status</th>
                                     <th>Action</th>
-                                    <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
                             </thead>
@@ -151,9 +150,6 @@ const ContentManagement = () => {
                                                     <button onClick={() => handlePublished(data)} className="badge">Publish</button> : <button onClick={() => handleUnPublished(data)} className="badge">Unpublish</button>
 
                                             }
-                                        </td>
-                                        <td>
-                                            <Link to={`/dashboard/reqUpdate/${data._id}`}><button><TiEdit className="text-green-500 text-xl"></TiEdit></button></Link>
                                         </td>
                                         <td>
                                             <button onClick={() => handleDelete(data)}
