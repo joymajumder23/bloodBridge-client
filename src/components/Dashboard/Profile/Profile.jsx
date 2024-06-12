@@ -5,6 +5,7 @@ import { FaEdit } from "react-icons/fa";
 import Skeleton from "../../Shared/Skeleton/Skeleton";
 import { useState } from "react";
 import UpdateProfileModal from "../../Modal/UpdateProfileModal";
+import { Helmet } from "react-helmet-async";
 
 const Profile = () => {
     const axiosPublic = useAxiosPublic();
@@ -28,6 +29,9 @@ const Profile = () => {
     }
     return (
         <div className="flex flex-col lg:flex-row gap-6">
+            <Helmet>
+                <title>Dashboard | Profile</title>
+            </Helmet>
             <div>
                 <div className="card card-compact w-full lg:w-96 bg-base-100 shadow-xl p-6">
                     <figure><img className={`rounded-full border-4 ${profile?.

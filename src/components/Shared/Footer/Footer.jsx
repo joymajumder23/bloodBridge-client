@@ -1,9 +1,14 @@
+import { Link } from "react-router-dom";
+import logo from "../../../assets/images/BloodBridgeLogo.png";
+
 const Footer = () => {
     return (
         <div className="bg-slate-950 mt-24">
             <div className="max-w-screen-xl mx-auto">
                 <footer className="footer px-10 py-4 border-t bg-slate-950 text-base-content border-base-300">
-                    <aside className="items-center grid-flow-col text-white">
+                    <aside className="items-center text-white">
+                        
+                        <Link to="/"><p className="text-xl font-semibold flex items-center"><img className="w-[80px] h-[80px]" src={logo} alt="" /> BloodBridge</p></Link>
                         <p>We are world largest and trustful blood donation center.</p>
                     </aside>
                 </footer>

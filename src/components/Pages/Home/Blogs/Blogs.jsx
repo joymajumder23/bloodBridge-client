@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import BlogCrad from "./BlogCrad";
 import { useQuery } from "@tanstack/react-query";
+import Skeleton from "../../../Shared/Skeleton/Skeleton";
 
 const Blogs = () => {
     const axiosPublic = useAxiosPublic();
     const [blogData, setBlogData] = useState([]);
-    const { data } = useQuery({
+    const { data, isLoading} = useQuery({
         queryKey: [''],
         queryFn: async () => {
             const res = await axiosPublic.get('/blogs');
@@ -15,6 +16,9 @@ const Blogs = () => {
     })
     console.log(blogData);
     const blogFilter = blogData.filter(data => data.status === 'published');
+    if(isLoading) {
+        return <Skeleton />;
+    }
     return (
         <div className="max-w-screen-xl mx-auto mt-24 text-center">
             <h1 className="text-4xl font-bold mb-6">Blogs</h1>

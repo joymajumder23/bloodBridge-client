@@ -6,6 +6,7 @@ import Skeleton from "../../../Shared/Skeleton/Skeleton";
 import ReqTable from "../../ReqTable/ReqTable";
 import useAdmin from "../../../Hooks/useAdmin";
 import AllBloodReqPage from "../../Volunteer/AllBloodReqPage";
+import { Helmet } from "react-helmet-async";
 
 const AllRequest = () => {
     const { user } = useAuth();
@@ -58,6 +59,9 @@ const AllRequest = () => {
     }
     return (
         <div>
+            <Helmet>
+                <title>Dashboard | All Blood Request</title>
+            </Helmet>
             <h1 className="text-4xl font-bold mb-6">All Blood Request</h1>
             <div>
                {

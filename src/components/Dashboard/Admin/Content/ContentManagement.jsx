@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import Skeleton from "../../../Shared/Skeleton/Skeleton";
 import useAdmin from "../../../Hooks/useAdmin";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const ContentManagement = () => {
     const [isAdmin] = useAdmin();
@@ -103,6 +104,9 @@ const ContentManagement = () => {
     }
     return (
         <div>
+            <Helmet>
+                <title>Dashboard | Contents</title>
+            </Helmet>
             <h1 className="text-3xl font-bold">Contents</h1>
             <div className="flex justify-between">
                 <div className="flex items-center gap-6"><h1 className="text-xl font-bold">All Contents</h1>

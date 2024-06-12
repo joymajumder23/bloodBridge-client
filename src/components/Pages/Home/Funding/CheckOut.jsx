@@ -74,9 +74,10 @@ const CheckOut = () => {
             const payment = {
                 email: user?.email,
                 fund: fundAmount,
-                transactionId,
+                transactionId: paymentIntent.id,
                 date: new Date().toLocaleDateString()
             }
+            console.log(transactionId);
 
 
             const res = await axiosSecure.post('/fund', payment);

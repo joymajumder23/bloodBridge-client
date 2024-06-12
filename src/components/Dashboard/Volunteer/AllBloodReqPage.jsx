@@ -2,18 +2,22 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
+import Skeleton from "../../Shared/Skeleton/Skeleton";
 
 const AllBloodReqPage = () => {
     const {user} = useAuth();
     const axiosSecure = useAxiosSecure();
 
-    const { data: reqData = [], isLoading, error, refetch } = useQuery({
+    const { data: reqData = [], isLoading, refetch } = useQuery({
         queryKey: ['reqData'],
         queryFn: async () => {
             const res = await axiosSecure.get('/request');
             return res.data;
         }
     });
+    if(isLoading) {
+        return <Skeleton />;
+    }
     const requestData = reqData.filter(data => data.requesterEmail !== user?.email);
     console.log(requestData);
 

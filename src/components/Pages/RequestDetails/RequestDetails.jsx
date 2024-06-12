@@ -6,6 +6,7 @@ import { FaRegAddressCard, FaUserNurse } from "react-icons/fa";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { MdBloodtype } from "react-icons/md";
 import { BiSolidMessageAltDots } from "react-icons/bi";
+import { Helmet } from "react-helmet-async";
 
 const RequestDetails = () => {
     const reqDetails = useLoaderData();
@@ -46,6 +47,9 @@ const RequestDetails = () => {
     }
     return (
         <div className="max-w-screen-xl mx-auto">
+            <Helmet>
+                <title>Donation Request | Details</title>
+            </Helmet>
             <h1 className="text-xl p-2">{recipientName} Details</h1>
            <div className="lg:flex gap-2 p-2">
            <div className="card w-full bg-base-200 text-neutral-content rounded-none">

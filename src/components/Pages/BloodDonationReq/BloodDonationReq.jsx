@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import Card from "../../Shared/Card/Card";
+import { Helmet } from "react-helmet-async";
 
 const BloodDonationReq = () => {
     const axiosPublic = useAxiosPublic();
@@ -18,6 +19,9 @@ const BloodDonationReq = () => {
     console.log(pendingReqData);
     return (
         <div className="max-w-screen-xl mx-auto mt-6">
+            <Helmet>
+                <title>Home | Donation Request</title>
+            </Helmet>
             <h1 className="text-3xl md:text-4xl mb-6">Donation Request</h1>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 p-2">
                 {

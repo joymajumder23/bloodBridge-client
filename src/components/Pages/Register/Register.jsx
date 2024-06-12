@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
 import registetImg from "../../../assets/images/BloodRegister.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import { axiosPublic } from "../../Hooks/useAxiosPublic";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -13,6 +14,7 @@ const Register = () => {
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
     const { createUser, updateUserProfile } = useAuth();
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -57,7 +59,7 @@ const Register = () => {
                                 district: data.district,
                                 upazila: data.upazila,
                                 status: 'active',
-                                role: ''
+                                role: 'donor'
                             };
                             axiosPublic.post('/users', userInfo)
                                 .then(res => {
@@ -65,6 +67,7 @@ const Register = () => {
                                     if (res.data.insertedId) {
                                         reset();
                                         toast.success('Registered Successfully')
+                                        navigate('/login');
                                     }
                                 })
                         })
@@ -78,6 +81,9 @@ const Register = () => {
     }
     return (
         <div>
+            <Helmet>
+                <title>Register</title>
+            </Helmet>
             <div className="hero min-h-screen">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center md:w-1/2 lg:text-left">

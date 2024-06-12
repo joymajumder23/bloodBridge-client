@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import useUser from "../../Hooks/useUser";
+import { Helmet } from "react-helmet-async";
 
 const CreateDonation = () => {
     const [districts, setDistricts] = useState([]);
@@ -84,6 +85,9 @@ const CreateDonation = () => {
     }
     return (
         <div>
+            <Helmet>
+                <title>Dashboard | Create Donation</title>
+            </Helmet>
             <h1 className="text-3xl font-bold p-4 text-red-500">Create Donation Request</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="card-body w-full border">
                 <div className="lg:flex gap-5">
@@ -193,10 +197,7 @@ const CreateDonation = () => {
                     </div>
                 </div>
                 <div>
-                    {
-                        users?.status === "blocked" ? <input disabled className="btn rounded-none bg-red-600 text-white w-full" type="submit" value="Register" /> : <input className="btn rounded-none bg-red-600 text-white w-full" type="submit" value="Register" />
-                    }
-                    
+                    <input disabled={users?.status === "blocked"} className="btn rounded-none bg-red-600 text-white w-full" type="submit" value="Create" />
                 </div>
             </form>
         </div>

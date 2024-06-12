@@ -3,6 +3,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Skeleton from "../../Shared/Skeleton/Skeleton";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure();
@@ -88,6 +89,9 @@ const AllUsers = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Dashboard | All Users</title>
+            </Helmet>
             <h1 className="text-3xl font-bold">All Users</h1>
             <div>
                 <select onChange={handleSelectChange} value={filter} className="select select-bordered w-full max-w-xs">

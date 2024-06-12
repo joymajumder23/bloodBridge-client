@@ -11,6 +11,7 @@ import useAdmin from '../../Hooks/useAdmin'
 import useVolunteer from '../../Hooks/useVolunteer'
 import { BiSolidBookContent, BiSolidDonateBlood } from 'react-icons/bi'
 import { ImProfile } from 'react-icons/im'
+import logo from "../../../assets/images/BloodBridgeLogo.png";
 
 const Sidebar = () => {
   const { logOut } = useAuth()
@@ -31,11 +32,12 @@ const Sidebar = () => {
             <Link to='/'>
               <img
                 // className='hidden md:block'
-                src=''
+                src={logo}
                 alt='logo'
-                width='100'
-                height='100'
+                width='50'
+                height='50'
               />
+              <p>BloodBridge</p>
             </Link>
           </div>
         </div>
@@ -55,17 +57,18 @@ const Sidebar = () => {
       >
         <div>
           <div>
-            {/* <div className='w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-rose-100 mx-auto'>
+            <div className='w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-rose-100 mx-auto'>
               <Link to='/'>
                 <img
                   // className='hidden md:block'
-                  src='https://i.ibb.co/4ZXzmq5/logo.png'
+                  src={logo}
                   alt='logo'
                   width='100'
                   height='100'
                 />
+                <p className='text-xl font-bold text-red-500'>BloodBridge</p>
               </Link>
-            </div> */}
+            </div>
           </div>
 
           {/* Nav Items */}

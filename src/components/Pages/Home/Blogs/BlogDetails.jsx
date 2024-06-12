@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
 
 const BlogDetails = () => {
@@ -6,6 +7,9 @@ const BlogDetails = () => {
     const {title, image, details} = blogDetails;
     return (
         <div className="max-w-screen-xl mx-auto mt-6">
+            <Helmet>
+                <title>Blog | Blog Details</title>
+            </Helmet>
             <h1 className="text-3xl md:text-4xl font-bold mb-2 p-2">Details:</h1>
             <div>
                 <div className="card card-compact w-full bg-base-100 shadow-xl p-2">

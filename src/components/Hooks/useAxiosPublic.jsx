@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosPublic = axios.create({
-    baseURL: 'http://localhost:5000'
+    baseURL: 'https://blood-donation-server-ecru.vercel.app'
 })
 const useAxiosPublic = () => {
     

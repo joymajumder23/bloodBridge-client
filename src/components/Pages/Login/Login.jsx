@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import loginUI from "../../../assets/images/bloodLogin.svg";
 import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
     const {signIn} = useAuth();
@@ -28,6 +29,9 @@ const Login = () => {
     }
     return (
         <div>
+            <Helmet>
+                <title>Login</title>
+            </Helmet>
             <div className="hero min-h-screen">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center md:w-full lg:text-left">

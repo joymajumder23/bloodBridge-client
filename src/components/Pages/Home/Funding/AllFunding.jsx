@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 
 const AllFunding = () => {
@@ -14,6 +15,9 @@ const AllFunding = () => {
 
     return (
         <div className='max-w-screen-xl mx-auto mt-12'>
+            <Helmet>
+                <title>Home | Funding</title>
+            </Helmet>
             <div className='flex justify-between p-2'>
             <h1 className='text-3xl font-bold'>All Funding</h1>
             <Link to="/funding"><button className='btn bg-red-500 text-white rounded-none'>Give Fund</button></Link>

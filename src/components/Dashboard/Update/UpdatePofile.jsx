@@ -129,7 +129,7 @@ const UpdatePofile = () => {
 
                 </div>
                 <div>
-                    <input className="btn rounded-none bg-red-600 text-white w-full" type="submit" value="Register" />
+                    <input className="btn rounded-none bg-red-600 text-white w-full" type="submit" value="Update" />
                 </div>
             </form>
         </div>

@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import Table from "../ReqTable/Table";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { Helmet } from "react-helmet-async";
 
 const DonorReqPage = () => {
     const { user } = useAuth();
@@ -97,6 +98,9 @@ const DonorReqPage = () => {
     }
     return (
         <div>
+            <Helmet>
+                <title>Dashboard | Donor Request</title>
+            </Helmet>
             <h1 className="text-3xl font-bold">My Donor Request</h1>
             <div>
                 <select onChange={handleSelectChange} value={filter} className="select select-bordered w-full max-w-xs">

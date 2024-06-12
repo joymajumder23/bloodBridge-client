@@ -41,13 +41,13 @@ const router = createBrowserRouter([
         },
         {
           path: "/request-details/:id",
-          element: <RequestDetails></RequestDetails>,
-          loader: ({params}) => fetch(`http://localhost:5000/request/requester/${params.id}`)
+          element: <PrivateRoute><RequestDetails></RequestDetails></PrivateRoute>,
+          loader: ({params}) => fetch(`https://blood-donation-server-ecru.vercel.app/request/requester/${params.id}`)
         },
         {
           path: "/blog-details/:id",
-          element: <BlogDetails></BlogDetails>,
-          loader: ({params}) => fetch(`http://localhost:5000/blogs/${params.id}`)
+          element: <PrivateRoute><BlogDetails></BlogDetails></PrivateRoute>,
+          loader: ({params}) => fetch(`https://blood-donation-server-ecru.vercel.app/blogs/${params.id}`)
         },
         {
           path: "/blog",
@@ -102,7 +102,7 @@ const router = createBrowserRouter([
         {
           path: "reqUpdate/:id",
           element: <ReqUpdate></ReqUpdate>,
-          loader: ({params}) => fetch(`http://localhost:5000/request/requester/${params.id}`)
+          loader: ({params}) => fetch(`https://blood-donation-server-ecru.vercel.app/request/requester/${params.id}`)
         },
         // Admin
         {

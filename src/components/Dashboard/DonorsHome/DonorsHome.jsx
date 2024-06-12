@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 const DonorsHome = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
@@ -54,6 +55,9 @@ const DonorsHome = () => {
     }
     return (
         <div>
+            <Helmet>
+                <title>Dashboard | Donor Home</title>
+            </Helmet>
             <h1 className="text-3xl text-red-500 font-bold mt-6"><span className="text-black">Hi, Welcome </span>
                 {
                     user?.displayName ? user?.displayName : "Back"
