@@ -8,7 +8,7 @@ const Banner = () => {
                 <Slider></Slider>
             </div>
 
-            <div className="absolute -mt-[130px] lg:-mt-[500px] ml-24 lg:ml-24 z-10">
+            <div className="absolute -mt-[130px] lg:-mt-[500px] ml-16 lg:ml-24 z-10">
                 <h1 className="text-white text-xs md:text-2xl">Donate Blood, Save Life!</h1>
                 <h1 className="text-white text-xs md:text-6xl uppercase">Donate Blood <br /> and inspires others.</h1>
                 <div className="flex gap-5">
