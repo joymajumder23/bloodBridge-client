@@ -38,4 +38,4 @@
 - Git will then copy and clone the server side URL.
 - npm install mongodb, express, cors, dotenv, nodemon in command prompt.
 - nodemon will run with index.js.
-- Then go to Chole, go to the client side and npm run dev.
+- Then go to, go to the client side and npm run dev.
